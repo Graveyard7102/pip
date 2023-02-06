@@ -1,0 +1,36 @@
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
+import sys
+
+
+def application():
+   app = QApplication(sys.argv)
+   window = QMainWindow()
+   text = QtWidgets.QLabel(window)
+   text1 = QtWidgets.QLabel(window)
+   text2 = QtWidgets.QLabel(window)
+
+   window.setWindowTitle("Моя програма")
+   window.setGeometry(30, 25, 350, 200)
+   text.setText ("sssssss")
+   text.move(30, 50)
+   text1.setText("ttyeh")
+   text1.move(70, 70)
+   text2.setText("fh;jg;b")
+   text2.move(50, 90)
+
+   def goat():
+      print("АХАХАХАХ, я манипулятор)")
+
+   button = QtWidgets.QPushButton(window)
+   button.move(70,90)
+   button.setText("Жми! Жми! Жми!")
+   button.setFixedSize(50,65)
+   button.clicked.connect(goat)
+
+   window.show()
+   sys.exit(app.exec_())
+
+if __name__ == "__main__":
+   application()
