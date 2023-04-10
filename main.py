@@ -1,33 +1,56 @@
-import telebot
-import pyautogui as pg
-import keyboard
+import pygame
+import random
 
-keyboard.press_and_release('shift+s, space')
+pygame.init()
+win = pygame.display.set_mode((1280, 720))
 
-bot = telebot.TeleBot('5816188541:AAE5YW-IYn3xqbT3hcevX2AdnM0OpCMBWN4')
+x = 50
+y = 50
+h = 60
+w = 60
+speed = 10
 
-@bot.message_handler(content_types=['text'])
-def get_text_messages(message):
-    if message.text == "/off":
-        pg.leftClick(24, 1056, duration=0.3)
-        pg.leftClick(19, 1008, duration=0.5)
-        pg.doubleClick(26, 926, duration=1)
-    elif message.text == "/gamepad":
-        keyboard.press_and_release('win+i')
-        pg.leftClick(656, 362, duration=0.9)
-        pg.leftClick(710, 429, duration=0.5)
-        pg.leftClick(674, 495, duration=0.5)
-        pg.leftClick(785, 446, duration=0.5)
-        pg.doubleClick(478, 133,duration=7)
-        pg.leftClick(756, 335, duration=1)
-        pg.leftClick(800, 366, duration=7)
-        pg.leftClick(1135, 773, duration=7)
-        pg.leftClick(1330, 39, duration=0.5)
-        pg.leftClick(1894, 14, duration=0.5)
-    elif message.text == "/gamepadbrowser":
-        pg.leftClick(1626, 107, duration=0.5)
-    elif message.text == "/help":
-        bot.send_message(message.from_user.id, "Вот список моих команд:\n/off - Выключить комппьютер\n/gamepad - подключить геймпад\n/gamepadbrowser - закрыть браузер после отключения геймпада")
-    else:
-        bot.send_message(message.from_user.id, "Я тебя не понимаю. Вот список моих команд:\n/off - Выключить комппьютер0\n/gamepad - подключить геймпад\n/gamepadbrowser - закрыть браузер после отключения геймпада")
-bot.polling(none_stop=True, interval=0)
+i = 10
+r = 10
+b = 100
+k = 100
+
+d = 50
+
+color = 130
+
+run = True
+while run:
+    pygame.time.delay(16)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_RIGHT] and x<1280 - w:
+        x += speed
+    elif keys[pygame.K_LEFT] and x>0:
+        x -= speed
+    elif keys[pygame.K_DOWN] and y<720 - h:
+        y += speed
+    elif keys[pygame.K_UP] and y>0:
+        y -= speed
+
+    if keys[pygame.K_d] and b<1280 - i:
+        b += speed
+    elif keys[pygame.K_a] and b>0:
+        b -= speed
+    elif keys[pygame.K_s] and k<720 - r:
+        k += speed
+    elif keys[pygame.K_w] and k>0:
+        k -= speed
+
+
+    win.fill((0, 0, 0))
+
+    if x<b+d and x>b-d and y<k+d and y>k-d:
+        color = 0
+
+    pygame.draw.rect(win, (0, 0, 130), (x, y, h, w))
+    pygame.draw.rect(win,(color, 0, 0), (b, k, r, i))
+
+    pygame.display.update()
