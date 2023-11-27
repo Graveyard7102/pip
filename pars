@@ -1,0 +1,24 @@
+from bs4 import BeautifulSoup
+import requests
+
+url = 'https://vk.com'
+page = requests.get(url)
+
+print('Полученный код:', page.status_code)
+
+filtered_ads = []
+all_ads = []
+soup = BeautifulSoup(page.text, 'html.parser')
+
+#print(123)
+
+all_ads = soup.findAll('a', class_='lenta') #тут короче надо смотреть хтмл код и выбирать нужны классы вместе/вместо
+                                                  #ленты, в этом примере класс отвечает за заголовки
+
+print(all_ads)
+
+for data in all_ads:
+    if data.find('span', class_='time2 time3') is not None: #здесь настраиваются фильтры того, что именно требуется вывет парсеру#
+        filtered_ads.append(data.text) #добавление элементов в отсортированные
+for data in filtered_ads:
+    print(data)#вывод(легче и лучше сделать в виде файла)
